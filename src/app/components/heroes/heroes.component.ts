@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero } from '../../interfaces/hero';
-import { HEROES } from '../../mocks/mock-heroes';
+import { HeroService } from '../../services/hero.service';
 
 @Component({
   selector: 'app-heroes',
@@ -9,17 +9,25 @@ import { HEROES } from '../../mocks/mock-heroes';
 })
 export class HeroesComponent implements OnInit {
   selectedHero: Hero;
-  heroes: Hero[] = HEROES;
+  heroes: Hero[];
 
-  constructor() { }
+  /* The parameter simultaneously defines a private heroService 
+  property and identifies it as a HeroService injection site. */
+  constructor(private heroService: HeroService) { }
 
   //Angular calls ngOnInit() shortly after creating a component
   //It's a good place to put initialization logic
   ngOnInit(): void {
+    this.getHeroes();
   }
 
   onSelect(hero: Hero): void {
     this.selectedHero = hero;
+  }
+
+  getHeroes(): void {
+    //The code below waits for the Observable to emit the array of heroes
+    this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
   }
 
 }

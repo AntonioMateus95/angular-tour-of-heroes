@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 
 import { Hero } from '../interfaces/hero';
 import { HEROES } from '../mocks/mock-heroes';
+import { MessageService } from './message.service';
 
 //Injectable decorator: marks the class as one that participates in the DI system
 //This decorator accepts a metadata object for the service
@@ -20,9 +21,11 @@ the service if it turns out not to be used after all.  */
 
 export class HeroService {
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   getHeroes(): Observable<Hero[]> {
+    //TODO: send the message _after_ fetching the heroes
+    this.messageService.add("Hero Service: fetched heroes");
     return of(HEROES);
   }
 }

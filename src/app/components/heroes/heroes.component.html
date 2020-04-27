@@ -1,5 +1,16 @@
 <h2>My heroes</h2>
 
+<div>
+    <label>Hero name:
+        <!-- Angular Directive to refer the input inside the HTML template itself -->
+        <input #heroName />
+    </label>
+    <!-- (click) passes input value to add() and then clears the input -->
+    <button (click)="add(heroName.value); heroName.value=''">
+        add
+    </button>
+</div>
+
 <ul class="heroes">
     <!-- Class binding: makes it easy to add and remove a CSS class conditionally -->
     <!-- Just add [class.some-css-class]="some-condition" to the element you want to style -->

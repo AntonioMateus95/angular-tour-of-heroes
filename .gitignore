@@ -1,2 +1,2 @@
 # Excluding all files from bin folder
-TourOfHeroes.Api/bin/
+/TourOfHeroes.Api/bin/*

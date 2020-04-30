@@ -22,7 +22,7 @@ the service if it turns out not to be used after all.  */
 
 export class HeroService {
 
-  private heroesUrl = 'api/heroes'; // URL to web api
+  private heroesUrl = 'https://localhost:5001/api/heroes'; // URL to web api
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

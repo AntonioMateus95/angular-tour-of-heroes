@@ -10,11 +10,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using TourOfHeroes.Api.Interfaces;
+using TourOfHeroes.Api.Models;
+using TourOfHeroes.Api.Services;
 
 namespace TourOfHeroes.Api
 {
     public class Startup
     {
+        private const string CorsPolicyName = "CustomCorsPolicyName";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +31,22 @@ namespace TourOfHeroes.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<HeroesDatabaseSettings>(
+                Configuration.GetSection(nameof(HeroesDatabaseSettings)));
+
+            services.AddSingleton<IHeroesDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<HeroesDatabaseSettings>>().Value);
+
+            services.AddSingleton<HeroService>();
+
+            services.AddCors(options => 
+            {
+                options.AddPolicy(name: CorsPolicyName, builder => 
+                {
+                    builder.WithOrigins("http://localhost:4200"); //Angular
+                });
+            });
+
             services.AddControllers();
         }
 
@@ -41,6 +63,8 @@ namespace TourOfHeroes.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(CorsPolicyName);
 
             app.UseEndpoints(endpoints =>
             {

@@ -9,7 +9,29 @@
             "request": "launch",
             "name": "Launch Angular project (Google Chrome)",
             "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}/Web"
+            "webRoot": "${workspaceFolder}/TourOfHeroes.Web"
+        },
+        {
+            "name": "Launch TourOfHeroes.Api (Web)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dotnet-build-api",
+            "program": "${workspaceFolder}/TourOfHeroes.Api/bin/Debug/netcoreapp3.1/TourOfHeroes.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/TourOfHeroes.Api",
+            "stopAtEntry": false,
+            "internalConsoleOptions": "openOnSessionStart",
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
         }
     ]
 }

@@ -43,7 +43,9 @@ namespace TourOfHeroes.Api
             {
                 options.AddPolicy(name: CorsPolicyName, builder => 
                 {
-                    builder.WithOrigins("http://localhost:4200"); //Angular
+                    builder.WithOrigins("http://localhost:4200") //Angular
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
                 });
             });
 
